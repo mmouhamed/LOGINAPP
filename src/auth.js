@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
+
 import { getUserByEmail } from "./data/users";
 
 export const {
@@ -15,17 +16,23 @@ export const {
   },
   providers: [
     CredentialsProvider({
+      credentials: {
+        email: {},
+        password: {},
+      },
       async authorize(credentials) {
-        if (credentials == null) return null;
+        if (credentials === null) return null;
+
         try {
           const user = getUserByEmail(credentials?.email);
+          console.log(user);
           if (user) {
-            const isMatch = user?.password === credentials?.password;
+            const isMatch = user?.password === credentials.password;
 
             if (isMatch) {
               return user;
             } else {
-              throw new Error("Check your password!");
+              throw new Error("Email or Password is not correct");
             }
           } else {
             throw new Error("User not found");
@@ -46,7 +53,6 @@ export const {
         },
       },
     }),
-
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
