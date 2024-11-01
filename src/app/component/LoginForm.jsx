@@ -12,7 +12,6 @@ const LoginForm = () => {
       const response = await doCredentialLogin(formData);
 
       if (!!response.error) {
-        
       } else {
         router.push("/home");
       }
@@ -53,7 +52,7 @@ const LoginForm = () => {
           Login
         </button>
       </form>
-      <SocialLogins />
+      {/* <SocialLogins /> */}
     </>
   );
 };
