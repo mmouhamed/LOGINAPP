@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import Image from "next/image";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from "next/navigation";
 import Logout from "../component/Logout";
 
 const HomePage = async () => {
